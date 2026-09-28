@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任贺 - Java/AI Agent 高级工程师</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9',
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #0ea5e9; border-radius: 4px; }
+
+        /* 打印 / 导出 PDF 样式 */
+        @media print {
+            .no-print { display: none !important; }
+
+            body {
+                background: #fff !important;
+                color: #111 !important;
+                font-size: 12px !important;
+            }
+
+            .dark body {
+                background: #fff !important;
+                color: #111 !important;
+            }
+
+            .dark .darkbg,
+            .dark .cardbg,
+            .dark .bg-gray-50,
+            .dark .bg-gray-100 {
+                background: #fff !important;
+            }
+
+            .dark .text-gray-200,
+            .dark .text-gray-300,
+            .dark .text-gray-400 {
+                color: #333 !important;
+            }
+
+            .dark .border-gray-700,
+            .dark .border-gray-800 {
+                border-color: #ddd !important;
+            }
+
+            .shadow-xl,
+            .shadow-lg,
+            .shadow-sm {
+                box-shadow: none !important;
+            }
+
+            .rounded-2xl,
+            .rounded-xl {
+                border-radius: 8px !important;
+            }
+
+            .max-w-6xl {
+                max-width: 100% !important;
+            }
+
+            .break-inside-avoid {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-darkbg dark:text-gray-200 font-sans transition-colors duration-300">
+
+    <!-- 顶部控制栏 -->
+    <div class="fixed top-4 right-4 no-print flex gap-2 z-50">
+        <button onclick="toggleDarkMode()" class="bg-white dark:bg-cardbg text-gray-600 dark:text-gray-300 p-3 rounded-full shadow-lg hover:shadow-xl transition-all" title="切换深色模式">
+            <i class="fas fa-moon dark:hidden"></i>
+            <i class="fas fa-sun hidden dark:inline"></i>
+        </button>
+        <button onclick="window.print()" class="bg-primary text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all" title="打印 / 导出 PDF">
+            <i class="fas fa-download"></i>
+        </button>
+    </div>
+
+    <div class="max-w-6xl mx-auto my-8 p-4 lg:p-8 bg-white dark:bg-cardbg shadow-xl rounded-2xl transition-colors duration-300">
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <!-- 左侧栏 -->
+            <div class="lg:w-1/3 space-y-8">
+
+                <!-- 头像与基本信息 -->
+                <div class="text-center">
+                    <div class="w-32 h-32 mx-auto bg-gradient-to-tr from-primary to-blue-400 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-lg mb-4">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">任贺</h1>
+                    <p class="text-primary font-semibold mt-1">Java高级软件工程师 / AI Agent开发</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">9年经验 | 金融科技 | 上海</p>
+                </div>
+
+                <!-- 联系方式 -->
+                <div class="bg-gray-50 dark:bg-darkbg p-5 rounded-xl space-y-3 text-sm">
+                    <h3 class="font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">联系方式</h3>
+                    <p class="flex items-center gap-3"><i class="fas fa-phone text-primary w-4"></i> 15556452303</p>
+                    <p class="flex items-center gap-3"><i class="fas fa-envelope text-primary w-4"></i> 1308509258@qq.com</p>
+                    <p class="flex items-center gap-3"><i class="fas fa-map-marker-alt text-primary w-4"></i> 上海</p>
+                    <p class="flex items-center gap-3"><i class="fas fa-graduation-cap text-primary w-4"></i> 安徽文达信息工程大学</p>
+                    <p class="flex items-center gap-3"><i class="fas fa-user text-primary w-4"></i> 34岁 | 本科 | 男</p>
+                </div>
+
+                <!-- 求职意向 -->
+                <div class="bg-gray-50 dark:bg-darkbg p-5 rounded-xl space-y-2 text-sm">
+                    <h3 class="font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">求职意向</h3>
+                    <p><span class="text-gray-500 dark:text-gray-400">工作性质：</span>全职</p>
+                    <p><span class="text-gray-500 dark:text-gray-400">目标职位：</span>Java高级软件工程师 / AI Agent开发</p>
+                    <p><span class="text-gray-500 dark:text-gray-400">目标地点：</span>上海</p>
+                    <p><span class="text-gray-500 dark:text-gray-400">期望薪资：</span>30-40K</p>
+                </div>
+
+                <!-- 证书与资质 -->
+                <div class="bg-gray-50 dark:bg-darkbg p-5 rounded-xl space-y-2 text-sm">
+                    <h3 class="font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">证书与资质</h3>
+                    <p class="flex items-center gap-3">
+                        <i class="fas fa-certificate text-primary w-4"></i>
+                        基金从业资格证
+                    </p>
+                </div>
+
+                <!-- 专业技能 -->
+                <div>
+                    <h3 class="font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2 mb-4">专业技能</h3>
+                    <div class="space-y-5">
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-gray-700 dark:text-gray-300">AI Agent / RAG 开发</span>
+                                <span class="text-primary">熟练</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                                <div class="bg-primary h-1.5 rounded-full" style="width: 82%"></div>
+                            </div>
+                            <div class="flex flex-wrap gap-1 mt-2">
+                                <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2 py-0.5 rounded">LangGraph</span>
+                                <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2 py-0.5 rounded">Spring AI</span>
+                                <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2 py-0.5 rounded">LangChain4j</span>
+                                <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2 py-0.5 rounded">RAG</span>
+                                <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2 py-0.5 rounded">Function Calling</span>
+                                <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2 py-0.5 rounded">多Agent协作</span>
+                                <span class="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 px-2 py-0.5 rounded">PgVector/Chroma</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-gray-700 dark:text-gray-300">Java / 微服务</span>
+                                <span class="text-primary">精通</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                                <div class="bg-primary h-1.5 rounded-full" style="width: 95%"></div>
+                            </div>
+                            <div class="flex flex-wrap gap-1 mt-2">
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">Spring Cloud Alibaba</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">Spring Boot</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">MyBatis</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">JPA</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">Nacos</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-gray-700 dark:text-gray-300">数据库与中间件</span>
+                                <span class="text-primary">精通</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                                <div class="bg-primary h-1.5 rounded-full" style="width: 90%"></div>
+                            </div>
+                            <div class="flex flex-wrap gap-1 mt-2">
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">MySQL</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">PostgreSQL</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">Redis</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">RabbitMQ</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">Elasticsearch</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-gray-700 dark:text-gray-300">前端与全栈</span>
+                                <span class="text-primary">熟悉</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                                <div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
+                            </div>
+                            <div class="flex flex-wrap gap-1 mt-2">
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">Vue3</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">Element Plus</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">Vaadin</span>
+                                <span class="text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 px-2 py-0.5 rounded">Python</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧栏 -->
+            <div class="lg:w-2/3 space-y-8">
+
+                <!-- 职业摘要 -->
+                <div>
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-white border-b-2 border-primary pb-2 mb-4">职业摘要</h3>
+                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                        9年Java后端开发经验，深耕金融科技领域，精通Spring全家桶与微服务架构。主导过多个资管核心系统的设计与落地，熟悉投研、估值、风控等金融业务流程。
+                        <strong class="text-primary">具备AI Agent/大模型应用落地经验，熟悉RAG、Function Calling、多智能体协作、LangChain和LangGraph等技术。持有基金从业资格证。</strong>
+                        具备良好的代码质量意识和项目推进能力。
+                    </p>
+                </div>
+
+                <!-- 工作经历 -->
+                <div>
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-white border-b-2 border-primary pb-2 mb-6">工作经历</h3>
+                    <div class="relative border-l-2 border-gray-200 dark:border-gray-700 ml-3 space-y-8">
+
+                        <div class="relative pl-6 break-inside-avoid">
+                            <div class="absolute -left-[9px] top-1 w-4 h-4 bg-primary rounded-full border-4 border-white dark:border-cardbg"></div>
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2">
+                                <h4 class="font-bold text-gray-900 dark:text-white">上海合晟资产私募管理有限公司</h4>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-darkbg px-2 py-1 rounded">2019.12 - 至今</span>
+                            </div>
+                            <p class="text-sm font-medium text-primary mb-2">研发部 | 软件工程师</p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>负责公司核心投研管理系统的设计与开发，支撑公司全业务链条</li>
+                                <li>参与系统架构设计与技术选型，推动微服务化改造</li>
+                                <li>带领团队完成多个核心模块的开发与上线，保障系统稳定运行</li>
+                                <li>参与智能投研AI Agent平台建设，基于LangGraph/Spring AI对接投研、估值、交易、信评等内部系统，实现自然语言查询、报告生成、异常归因与风险预警等能力</li>
+                            </ul>
+                        </div>
+
+                        <div class="relative pl-6 break-inside-avoid">
+                            <div class="absolute -left-[9px] top-1 w-4 h-4 bg-gray-400 rounded-full border-4 border-white dark:border-cardbg"></div>
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2">
+                                <h4 class="font-bold text-gray-900 dark:text-white">上海国曼实业有限公司（为上海合晟资产服务）</h4>
+                                <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-darkbg px-2 py-1 rounded">2017.07 - 2019.12</span>
+                            </div>
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">研发部 | 软件工程师</p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>参与数据质量平台与商务智能平台的后端开发工作</li>
+                                <li>负责核心业务模块的编码实现与单元测试</li>
+                                <li>参与需求分析与技术方案讨论，保障项目按期交付</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 项目经历 -->
+                <div>
+                    <h3 class="font-bold text-xl text-gray-900 dark:text-white border-b-2 border-primary pb-2 mb-6">项目经历</h3>
+                    <div class="space-y-6">
+
+                        <!-- 项目1：智能投研 AI Agent 平台 -->
+                        <div class="bg-gray-50 dark:bg-darkbg p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm break-inside-avoid">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3">
+                                <h4 class="font-bold text-lg text-gray-900 dark:text-white">
+                                    智能投研AI Agent平台
+                                    <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 px-2 py-0.5 rounded ml-2">AI 实战</span>
+                                </h4>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">2025.03 - 至今</span>
+                            </div>
+                            <p class="text-xs font-mono text-primary mb-3 bg-blue-50 dark:bg-blue-900/30 p-2 rounded">
+                                Java + Spring Boot + Spring AI / LangChain4j + LangGraph + Python + LLM（DeepSeek/通义千问/OpenAI等） + RAG + 向量数据库（PgVector/Chroma） + Elasticsearch + Redis + RabbitMQ + Vue3 + Element Plus
+                            </p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                                <strong>项目描述：</strong>面向资管投研、估值、风控场景，构建企业级AI Agent平台。通过自然语言交互，连接内部投研管理系统、估值引擎、数据质量平台与Wind等数据源，提供智能问答、数据查询、研报摘要、估值异常归因、风险预警、指令辅助等能力，降低业务人员数据获取与分析门槛。
+                            </p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li><strong>AI Agent架构设计：</strong>负责AI Agent整体技术方案与后端架构设计，基于LangGraph实现Agent编排、工具注册、Function Calling、多轮对话与上下文管理</li>
+                                <li><strong>RAG知识库建设：</strong>构建RAG知识库，将产品文档、制度流程、研报、会议纪要、数据库Schema等向量化，结合ES/向量库实现混合检索与重排，提升回答准确率与可追溯性</li>
+                                <li><strong>内部系统工具集成：</strong>开发内部系统工具集，封装投研查询、估值表生成、持仓分析、信评敞口、指令流转等API为Agent可调用工具，实现“自然语言→工具调用→结果总结”的闭环</li>
+                                <li><strong>多Agent协作：</strong>设计多Agent协作模式，支持数据查询Agent、分析Agent、报告生成Agent、风控Agent协同完成复杂任务</li>
+                                <li><strong>安全与合规：</strong>实现权限控制、操作审计、敏感数据脱敏与Prompt注入防护，满足金融合规与审计要求</li>
+                                <li><strong>性能与成本优化：</strong>优化推理成本与响应速度，采用缓存、异步任务、流式输出、模型路由等方案，提升高并发下的可用性</li>
+                                <li><strong>成果：</strong>支持业务人员自助查询投研数据与生成分析摘要，减少重复取数与报表整理工作；为估值异常排查、信评跟踪等场景提供智能辅助</li>
+                            </ul>
+                        </div>
+
+                        <!-- 项目2：投研管理系统 -->
+                        <div class="bg-gray-50 dark:bg-darkbg p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm break-inside-avoid">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3">
+                                <h4 class="font-bold text-lg text-gray-900 dark:text-white">投研管理系统</h4>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">2019.12 - 至今</span>
+                            </div>
+                            <p class="text-xs font-mono text-gray-500 dark:text-gray-400 mb-3 bg-gray-100 dark:bg-gray-800 p-2 rounded">
+                                Spring Cloud Alibaba + Spring Boot + JPA + MySQL + Vue + Element UI + Redis + RabbitMQ
+                            </p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                                <strong>项目描述：</strong>公司核心业务系统，覆盖产品管理、客户管理、交易管理、预警管理、研究管理、投研管理、销售管理、财务管理等全业务模块。系统完整支撑投研业务链条，从产品要素确认到产品清算、客户分红全流程。支持债券、股票、基金、期货等多品类资产的数据分析与预测，基于多线程、消息队列、缓存等技术生成估值表，为公司投研决策提供准确的数据支撑。
+                            </p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li><strong>系统架构设计：</strong>参与微服务架构设计，基于Spring Cloud Alibaba实现服务拆分，将单体应用拆分为多个业务服务，提升系统可扩展性与部署效率</li>
+                                <li><strong>估值引擎优化：</strong>主导估值表生成模块的性能优化，采用多线程并行计算 + 消息队列异步处理 + Redis多级缓存，将单只产品估值时间从分钟级缩短至秒级，支持日均数百只产品的估值计算</li>
+                                <li><strong>投研数据分析：</strong>负责投研数据分析模块开发，基于多线程技术实现债券、股票、基金、期货等多品类资产的批量分析与预测，为投资决策提供数据支持</li>
+                                <li><strong>核心业务模块：</strong>主导产品管理、交易管理、财务管理等核心模块的设计与开发，保障业务流程顺畅运行</li>
+                                <li><strong>项目管理：</strong>参与项目排期与进度把控，协调前后端资源，推动多个版本按期上线</li>
+                            </ul>
+                        </div>
+
+                        <!-- 项目3：商务智能平台 -->
+                        <div class="bg-gray-50 dark:bg-darkbg p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm break-inside-avoid">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3">
+                                <h4 class="font-bold text-lg text-gray-900 dark:text-white">商务智能平台</h4>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">2018.04 - 2019.12</span>
+                            </div>
+                            <p class="text-xs font-mono text-gray-500 dark:text-gray-400 mb-3 bg-gray-100 dark:bg-gray-800 p-2 rounded">
+                                Spring Cloud + Spring Boot + JPA + PostgreSQL + Vaadin + Redis
+                            </p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                                <strong>项目描述：</strong>面向资管业务的商务智能平台，采用Vaadin前端框架实现快速开发，Spring Boot快速集成，Spring Cloud管理服务间调用。系统包含持仓详情、持仓导入导出、产品配置、产品出入金、信评展示、信评敞口、信评编辑、指令流转、运营估值等模块。基于职责模式实现精细化权限控制，使用AOP切面编程实现风控管理与日志管理。
+                            </p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li><strong>核心模块开发：</strong>负责产品出入金、信评展示、信评敞口、信评编辑、指令流转等核心业务模块的设计与开发</li>
+                                <li><strong>指令流转系统：</strong>主导指令流转模块设计，实现投资经理下单 → 交易员执行的完整业务流程，基于职责模式实现多级权限控制，确保交易安全合规</li>
+                                <li><strong>风控与日志：</strong>基于AOP切面编程实现统一风控管理与操作日志记录，覆盖所有关键业务操作，满足审计要求</li>
+                                <li><strong>信评系统：</strong>负责信评模块开发，支持信评数据的展示、编辑与敞口分析，为信用风险评估提供数据支撑</li>
+                                <li><strong>代码质量：</strong>大量使用接口与抽象类设计，遵循MVC分层思想，提升代码复用性与可扩展性</li>
+                            </ul>
+                        </div>
+
+                        <!-- 项目4：数据质量平台 -->
+                        <div class="bg-gray-50 dark:bg-darkbg p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm break-inside-avoid">
+                            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3">
+                                <h4 class="font-bold text-lg text-gray-900 dark:text-white">数据质量平台</h4>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">2017.07 - 2018.04</span>
+                            </div>
+                            <p class="text-xs font-mono text-gray-500 dark:text-gray-400 mb-3 bg-gray-100 dark:bg-gray-800 p-2 rounded">
+                                Spring Boot + JPA + MySQL + Spring Cloud
+                            </p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                                <strong>项目描述：</strong>面向证券公司的数据监控平台，实时监控业务数据的完整性、缺失性等质量指标，将检测结果以可视化方式展示，方便业务人员分析数据流向、及时发现并处理数据问题。
+                            </p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li><strong>后台功能开发：</strong>参与项目设计与排期，负责后台核心功能的开发实现</li>
+                                <li><strong>数据接口开发：</strong>负责后台数据接口的设计与联调，保障前后端数据交互顺畅</li>
+                                <li><strong>Wind数据对接：</strong>基于Spring Cloud Feign调用Python Flask接口，实现从Wind终端多线程批量拉取金融数据并存储，数据拉取效率提升3倍以上</li>
+                                <li><strong>代码设计：</strong>采用MVC思想进行业务逻辑设计，大量使用抽象类与接口，使代码具有高扩展性与高复用性</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 深色模式初始化
+        if (localStorage.getItem('color-theme') === 'dark' ||
+            (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // 深色模式切换
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        }
+    </script>
+
+</body>
+</html>
